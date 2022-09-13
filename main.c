@@ -6,30 +6,40 @@ int randomNumber(int num) {
 	return randomNumber;
 }
 
-void menu(int sleepValue,char* fileName) {
+void menu(int sleepValue,char * fileName) {
 
-
+	char messageType;
+	char message[200];
 	int menuChoice;
+
+	do {	
 	printf("(1)Add message\n");
         printf("(2)Clear log\n");
         printf("(3)Get log\n");
         printf("(4)Save log\n");
-	printf("Please enter your choice between 1-4:");
+	printf("(5)Quit\n");
+	printf("Please enter your choice between 1-5:");
 	menuChoice = validateInputs();
 	switch (menuChoice) {
 		case 1 :
-			printf("Your inside case 1\n");
+			printf("What type of message would you like to add?One char only.(I, W, E, or F): ");
+			scanf(" %c", &messageType);
+			printf("What is the message you would like to add to the queue? : ");
+			scanf(" %[^\n]%*c", message);
+			addmsg(messageType, message);
 			break;
                 case 2 :
-                        printf("Your inside case 2\n");
+                        clearlog();
                         break;
                 case 3 :
-                        printf("Your inside case 3\n");
+                        printf("The log in queue is: %s\n", getlog());
                         break;
                 case 4 :
                         printf("Your inside case 4\n");
-                        break;
+                        break; 
 	}
+	} while (menuChoice != 5);
+	
 }
 
 /*int optionHandler(int argc, char **argv, char *fileName) {
@@ -66,7 +76,7 @@ int validateInputs() {
         int input = 0;
         while(flag) {
                 scanf("%d", &input);
-                while (input < 1 || input > 4) {
+                while (input < 1 || input > 5) {
                     printf("That is an invalid input. Please enter a number between 1 and 4: ");
                     scanf("%d", &input);
                 }

@@ -15,6 +15,6 @@ extern int errno;
 
 int randomNumber(int);
 int optionHandler(int, char **, char *);
-void menu(int);
+void menu(int, char *);
 int validateInputs();
 #endif

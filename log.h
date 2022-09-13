@@ -1,4 +1,12 @@
+#ifndef LOG_H
+#define LOG_H 
+
+
 #include <time.h>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct data_struct
 {
 	time_t time; // Time stamp
@@ -6,7 +14,9 @@ typedef struct data_struct
 	char * string; // Message string
 } data_t;
 
-int addmsg ( const char type, const char * msg );
-void clearlog();
-char * getlog();
+int addmsg(char, char*);
+void clearlog(void);
+char * getlog(void);
 int savelog ( char * filename );
+
+#endif
