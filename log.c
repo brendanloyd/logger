@@ -5,9 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <fstream>
 #include "log.h"
-
-#define TRAV_INIT_SIZE 8
 
 typedef struct list_struct {
 	data_t item;
@@ -17,12 +16,15 @@ typedef struct list_struct {
 static list_t *headptr = NULL;
 static list_t *tailptr = NULL;
 
-int addmsg(char type, char * msg) { /* allocate node for data and add to end of list */
+int addmsg(char type, char * msg) {
 	list_t *newnode;
 	int nodesize;
 	nodesize = sizeof(list_t) + (sizeof(type) + (strlen(msg)) + 2);
-	if ((newnode = (list_t *)(malloc(nodesize))) == NULL) /* couldn't add node */
+	
+	if ((newnode = (list_t *)(malloc(nodesize))) == NULL) {
+		perror("Error: addmsg ");
 		return -1;
+	}
 	
 	newnode->item.time = time(NULL);
 	newnode->item.type = type;	
@@ -58,14 +60,22 @@ char * getlog() {
 		finalString[sum + 1] = 0x00;
 
 	}
-	printf("The string is: %s\n", finalString);
 	return finalString;
 }
 
 
 
 int savelog(char *filename) {
- return 0;
+	FILE *out_file = fopen(filename, "a");	
+
+	if(out_file == NULL){
+		perror("Error: savelog ");
+		return -1;
+	} else {
+		fprintf(out_file, "%s", getlog());
+	} 
+
+	return 0;
 }
 
 void clearlog(void) {
